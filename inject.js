@@ -35,13 +35,13 @@ const search = {
   liveTokenTemplate: (key, value) => {
     return `<div data-key='${key} live' style='white-space:nowrap;isplay:inline-block;margin-top: 5px;vertical-align:middle;padding:5px 10px;background-color:#888;color:#fff;border-radius: 1em;'>${value}</div>`;
   },
-  //intialize containers
+  //intialize dom containers
   //tokens are stored in data attributes in the search input tag
   init: () => {
     reset();
     search.input().parentNode.innerHTML = "<span style='white-space: nowrap;' class='filter-container'></span><span style='white-space: nowrap;' class='filter-container-live'></span>" + $("[data-testid=SearchBox_Search_Input]").parentNode.innerHTML;
     search.input().addEventListener("input", search.tokenizer, false);
-    search.input().addEventListener("keydown", search.focusHandler, false);
+    search.input().addEventListener("keydown", search.inputHandler, false);
     search.input().dataset.tokens = "";
     search.input().dataset.liveToken = "";
   },
@@ -86,7 +86,7 @@ const search = {
     search.saveTokens(obj, appended);
     search.container(search.renderTokens(obj));
   },
-  focusHandler: (e) => {
+  inputHandler: (e) => {
     if (e.key === "Tab") {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -119,7 +119,7 @@ const search = {
   },
   search: (obj) => {
     //simple version, anything further requires Twitter API
-    window.location = "https://twitter.com/search?q=" + escape(`${search.getTokenString(obj)}${obj.value}`);
+    window.location = `https://twitter.com/search?q=${search.getTokenString(obj)}${obj.value}`;
   },
 };
 search.init();
