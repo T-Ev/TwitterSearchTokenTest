@@ -10,6 +10,8 @@ Copy and paste the contents of inject.js into the JS console of any twitter page
 
 I tried to keep it as simple as possible for v1. I might add some fun bells and whistles later.
 
+[http://url/to/img.png](https://cdn.discordapp.com/attachments/803131522571829289/1044900876772446219/image.png)
+
 ## Contribute
 
 Feel free to fork and make it your own!
