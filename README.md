@@ -30,7 +30,7 @@ I made this:
 
 ~~**Make sure you are signed in!**~~
 
-Nevermind it works in incognito now thanks the mad lad [@Yaroslav](https://twitter.com/512x512/status/1595612720497590273?s=20&t=-52KSb0xbmOJMpa6qqz9AA) who is an API BEAST! Give him a follow!
+Nevermind it works in incognito now thanks the mad lad [@512x512 (Yaroslav)](https://twitter.com/512x512/status/1595612720497590273?s=20&t=-52KSb0xbmOJMpa6qqz9AA) who is an API BEAST! Give him a follow!
 
 Copy and paste the contents of script.js into the JS console of any twitter page with a search bar (i.e. [https://twitter.com/explore](https://twitter.com/explore)
 
@@ -40,4 +40,4 @@ I tried to keep it as simple as possible.
 
 ## Contribute
 
-Feel free to fork and make it your own!
+Feel free to fork and make it your own! Also I eat PR's for breakfast :)
