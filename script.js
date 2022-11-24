@@ -185,10 +185,15 @@ const search = {
       const walk = (x - search.slide.startX) * 3; //scroll-fast
       slider.scrollLeft = search.slide.scrollLeft - walk;
     });
+    search.checkDarkMode();
+  },
+  checkDarkMode: () => {
     //check for darkmode
-    if (document.querySelector("body").style.backgroundColor !== "rgb(255, 255, 255)") {
-      search.listBox().classList.add("darkmode");
+    if (document.querySelector("body").style.backgroundColor !== "rgb(255, 255, 255)" && document.querySelector("body").style.backgroundColor !== "#FFFFFF") {
       document.querySelector(".filter-wrapper").classList.add("darkmode");
+      try {
+        search.listBox().classList.add("darkmode");
+      } catch {}
     }
   },
   getTokens: (obj) => {
@@ -223,6 +228,7 @@ const search = {
         setTimeout(() => {
           //attempt to attach listener to search clear button if it exists
           try {
+            search.checkDarkMode();
             document.querySelector("[role=search] [data-testid=clearButton]").addEventListener("click", (e) => {
               e.preventDefault();
               e.stopImmediatePropagation();
