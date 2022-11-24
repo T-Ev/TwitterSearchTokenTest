@@ -40,6 +40,11 @@ I tried to keep it as simple as possible.
 
 ![Demo Screenshot](https://cdn.discordapp.com/attachments/803131522571829289/1044900876772446219/image.png)
 
+## Using it via extension:
+Go to chrome://extensions/ and turn on developer mode (top right).
+
+Then click "Load Unpacked" and navigate to wherever you saved this file locally. It'll then load into chrome.
+
 ## Contribute
 
 Feel free to fork and make it your own! Also I eat PR's for breakfast :)
