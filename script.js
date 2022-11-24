@@ -1,7 +1,7 @@
 /* Twitter Search Tokenization UI Demo
  *  Author: TJ Evarts
  *  Date: 11/23/2022
- *  Version: 0.1.1
+ *  Version: 0.1.2
  *  Free to Use by anybody
  *
  *  Usage: Copy and paste this whole file into the js console of any twitter page that has a search box
@@ -58,7 +58,7 @@ const search = {
       type: "text",
       q: (v) => `"${v.substring(1)}"`,
       searchMethod: "",
-    },
+    }, // This token below totally works! Uncomment to check it out:
     // {
     //   t: "time:",
     //   pre: " ",
@@ -278,6 +278,10 @@ const search = {
     if (e.key === "Tab" || (e.key === "Enter" && search.liveToken(e.target) !== "" && !search.listBox().querySelector(".list-item.active"))) {
       e.preventDefault();
       e.stopImmediatePropagation();
+      if (e.key === "Tab" && search.listBox().querySelector(".list-item.active")) {
+        search.listBox().querySelector(".list-item.active").click();
+        return;
+      }
       search.switchToken(e.target);
     } else if (e.key === "Backspace" && e.target.value.length == 0) {
       e.target.style.color = "inherit";
@@ -417,7 +421,11 @@ const search = {
       document.querySelector("#injected_css").remove();
     } catch {}
   },
-  //more twitter api 1.1 helper functions:
+  /*more twitter api 1.1 helper functions:
+   * ===================================
+   * The code below was by @Yaroslav, the mad lad cracking the private non-documented Twitter apis. Go show him some love!
+   * ===================================
+   */
   getCookie: (cname) => {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -438,6 +446,7 @@ const search = {
     return new Promise((resolve, reject) => {
       const requestUrl = new URL(search.typeAheadUrl);
       const csrfToken = search.getCookie("ct0");
+      const gt = search.getCookie("gt");
       // constant in twitter js code
       const authorization = "AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
 
@@ -450,7 +459,12 @@ const search = {
       xmlHttp.open("GET", requestUrl.toString(), false);
       xmlHttp.setRequestHeader("x-csrf-token", csrfToken);
       xmlHttp.setRequestHeader("x-twitter-active-user", "yes");
-      xmlHttp.setRequestHeader("x-twitter-auth-type", "OAuth2Session");
+      if (search.getCookie("auth_token")) {
+        //check if user is logged in
+        xmlHttp.setRequestHeader("x-twitter-auth-type", "OAuth2Session");
+      } else {
+        xmlHttp.setRequestHeader("x-guest-token", gt);
+      }
       xmlHttp.setRequestHeader("x-twitter-client-language", "en");
       xmlHttp.setRequestHeader("authorization", `Bearer ${authorization}`);
 
