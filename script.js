@@ -1,7 +1,7 @@
 /* Twitter Search Tokenization UI Demo
  *  Author: TJ Evarts
  *  Date: 11/23/2022
- *  Version: 0.1.2
+ *  Version: 0.1.3
  *  Free to Use by anybody
  *
  *  Usage: Copy and paste this whole file into the js console of any twitter page that has a search box
@@ -80,44 +80,14 @@ const search = {
     return `<div class='token ${key} live'>${value}</div>`;
   },
 
-  //tokens are stored in data attributes in the search input tag
-  init: () => {
-    search.reset();
-    search.injectCSS();
-    //intialize dom containers
-    search.input().parentNode.innerHTML = "<span class='filter-wrapper'><span class='filter-container r-n6v787'></span><span class='filter-container-live r-n6v787'></span></span>" + $("[data-testid=SearchBox_Search_Input]").parentNode.innerHTML;
-    //add event listeners on input
-    search.addListeners();
-    search.input().dataset.tokens = "";
-    search.input().dataset.liveToken = "";
-
-    let slider = document.querySelector(".filter-wrapper");
-    slider.addEventListener("mousedown", (e) => {
-      search.slide.isDown = true;
-      slider.classList.add("active");
-      search.slide.startX = e.pageX - slider.offsetLeft;
-      search.slide.scrollLeft = slider.scrollLeft;
-    });
-    slider.addEventListener("mouseleave", () => {
-      search.slide.isDown = false;
-      slider.classList.remove("active");
-    });
-    slider.addEventListener("mouseup", () => {
-      search.slide.isDown = false;
-      slider.classList.remove("active");
-    });
-    slider.addEventListener("mousemove", (e) => {
-      if (!search.slide.isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - search.slide.startX) * 3; //scroll-fast
-      slider.scrollLeft = search.slide.scrollLeft - walk;
-    });
-  },
+  //Inject Token CSS
   injectCSS: () => {
     var css = `
-    .filter-container,filter-container-live{
+    .filter-container, .filter-container-live, .flex-center{
       white-space: nowrap;
+    }
+    .flex-center {
+      align-items: center;
     }
     .filter-wrapper{
       max-width: 50%;
@@ -128,7 +98,6 @@ const search = {
     .token {
       white-space: nowrap;
       display: inline-block;
-      margin-top: 8px;
       padding: 3px 8px;
       background-color: #bbb;
       color: #222;
@@ -162,6 +131,12 @@ const search = {
     input:not([type=text]) {
       opacity:0;
     }
+    .darkmode .list-item div{
+      color: rgb(247, 249, 249);
+    }
+    .filter-wrapper.darkmode div{
+      color: rgb(247, 249, 249);
+    }
     `,
       head = document.head || document.getElementsByTagName("head")[0],
       style = document.createElement("style");
@@ -173,6 +148,47 @@ const search = {
       style.styleSheet.cssText = css;
     } else {
       style.appendChild(document.createTextNode(css));
+    }
+    search.input().parentNode.classList.add("flex-center");
+  },
+
+  //tokens are stored in data attributes in the search input tag
+  init: () => {
+    search.reset();
+    search.injectCSS();
+    //intialize dom containers
+    search.input().parentNode.innerHTML = "<span class='filter-wrapper'><span class='filter-container r-n6v787'></span><span class='filter-container-live r-n6v787'></span></span>" + $("[data-testid=SearchBox_Search_Input]").parentNode.innerHTML;
+    //add event listeners on input
+    search.addListeners();
+    search.input().dataset.tokens = "";
+    search.input().dataset.liveToken = "";
+    //mouse click and drag listeners for token container
+    let slider = document.querySelector(".filter-wrapper");
+    slider.addEventListener("mousedown", (e) => {
+      search.slide.isDown = true;
+      slider.classList.add("active");
+      search.slide.startX = e.pageX - slider.offsetLeft;
+      search.slide.scrollLeft = slider.scrollLeft;
+    });
+    slider.addEventListener("mouseleave", () => {
+      search.slide.isDown = false;
+      slider.classList.remove("active");
+    });
+    slider.addEventListener("mouseup", () => {
+      search.slide.isDown = false;
+      slider.classList.remove("active");
+    });
+    slider.addEventListener("mousemove", (e) => {
+      if (!search.slide.isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - search.slide.startX) * 3; //scroll-fast
+      slider.scrollLeft = search.slide.scrollLeft - walk;
+    });
+    //check for darkmode
+    if (document.querySelector("body").style.backgroundColor !== "rgb(255, 255, 255)") {
+      search.listBox().classList.add("darkmode");
+      document.querySelector(".filter-wrapper").classList.add("darkmode");
     }
   },
   getTokens: (obj) => {
@@ -205,7 +221,7 @@ const search = {
       "focus",
       (ev) => {
         setTimeout(() => {
-          //attempt to link to search clear button if it exists
+          //attempt to attach listener to search clear button if it exists
           try {
             document.querySelector("[role=search] [data-testid=clearButton]").addEventListener("click", (e) => {
               e.preventDefault();
@@ -415,16 +431,15 @@ const search = {
     search.input().style.color = "inherit";
     search.input().removeEventListener("input", search.tokenizer, true);
     search.input().removeEventListener("keydown", search.inputHandler, true);
-    // search.input().removeEventListener("focus", search.focusHandler, true);
     try {
+      document.querySelector("#injected_css").remove();
       document.querySelector(".filter-container").remove();
       document.querySelector(".filter-container-live").remove();
-      document.querySelector("#injected_css").remove();
     } catch {}
   },
-  /*more twitter api 1.1 helper functions:
+  /* More twitter api 1.1 helper functions:
    * ===================================
-   * The code below was by @Yaroslav, the mad lad cracking the private non-documented Twitter apis. Go show him some love!
+   * The code below was by Yaroslav (@512x512), the mad lad cracking the private non-documented Twitter apis. Go show him some love!
    * ===================================
    */
   getCookie: (cname) => {
@@ -462,7 +477,7 @@ const search = {
       xmlHttp.setRequestHeader("x-csrf-token", csrfToken);
       xmlHttp.setRequestHeader("x-twitter-active-user", "yes");
 
-      if (search.getCookie("auth_token")) {
+      if (search.getCookie("twid")) {
         //check if user is logged in
         xmlHttp.setRequestHeader("x-twitter-auth-type", "OAuth2Session");
       } else {

@@ -12,7 +12,7 @@ I made this:
 
 [](https://)
 
-## Version 0.1.2!!! SUPER GREAT NOW!
+## Version 0.1.3!!! SUPER SUPER GREAT NOW!
 
 ### What's new?
 
@@ -25,6 +25,8 @@ I made this:
 - Styling update
 - Attempt to hook in search clear button if it exists
 - You can now tab to select suggestions
+- Dark Mode Support
+- Works on mobile!
 
 ## Usage
 
