@@ -71,7 +71,7 @@ const search = {
   //set up helper functions
   container: (val) => (document.querySelector(".filter-container").innerHTML = val),
   containerLive: (val) => (document.querySelector(".filter-container-live").innerHTML = val),
-  listBox: () => document.querySelector("[role=listbox]") || document.querySelector("[role=search] div.r-zchlnj"),
+  listBox: () => document.querySelector("[role=listbox]") || document.querySelector("[role=search]"),
   input: () => document.querySelector("[data-testid=SearchBox_Search_Input]"),
   tokenTemplate: (key, value) => {
     return `<div class='token ${key}' >${key} ${value}</div>`;
