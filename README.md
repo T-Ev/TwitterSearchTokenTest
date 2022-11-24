@@ -4,6 +4,10 @@ Comma AI guy made a Tweet ;)
 
 https://twitter.com/realGeorgeHotz/status/1595270867402956801?s=20&t=zL5Om6wTGfjsFiik4Z63Pw
 
+I made this:
+
+![Demo Screenshot](https://cdn.discordapp.com/attachments/803131522571829289/1044900876772446219/image.png)
+
 ## Version 0.1.1!!! SUPER GREAT NOW!
 
 ### What's new?
