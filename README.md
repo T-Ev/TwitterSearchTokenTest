@@ -8,6 +8,10 @@ I made this:
 
 ![Demo Screenshot](https://cdn.discordapp.com/attachments/803131522571829289/1044900876772446219/image.png)
 
+[Demo Video](https://twitter.com/TJEvarts/status/1595600733914669062?s=20&t=_cdefDme6RcCFnC4_3ngkQ)
+
+[](https://)
+
 ## Version 0.1.1!!! SUPER GREAT NOW!
 
 ### What's new?
@@ -23,12 +27,13 @@ I made this:
 
 ## Usage
 
+**Make sure you are signed in!**
+
 Copy and paste the contents of script.js into the JS console of any twitter page with a search bar (i.e. [https://twitter.com/explore](https://twitter.com/explore)
 
 I tried to keep it as simple as possible.
 
 ![Demo Screenshot](https://cdn.discordapp.com/attachments/803131522571829289/1044900876772446219/image.png)
-(old version, video on new one soon hopefully)
 
 ## Contribute
 
