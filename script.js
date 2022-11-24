@@ -514,7 +514,7 @@ const search = {
 };
 
 try {
-  chrome?.runtime?.onMessage?.addListener(function (request, sender, sendResponse) {
+  chrome?.runtime?.onMessage?.addListener(function (request) {
     if (request.message === "pageChanged") {
       if (search.lastURL !== window.location.href) {
         setTimeout(search.init, 1000);
