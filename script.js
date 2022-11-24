@@ -355,7 +355,7 @@ const search = {
         list = search.tokenObjects;
         hint = "t";
       } else if (listType === "users") {
-        insert = `<img class="r-sdzlij r-1b7u577" src="ele.profile_image_url"/><div class="text-wrap"><div class="list-item-name r-b88u0q">ele.name</div><div class="r-14j79pv list-item-username list-value">@ele.screen_name</div></div>`;
+        insert = `<img class="r-sdzlij r-1b7u577" src="ele.profile_image_url_https"/><div class="text-wrap"><div class="list-item-name r-b88u0q">ele.name</div><div class="r-14j79pv list-item-username list-value">@ele.screen_name</div></div>`;
         userString = query.replace(" ", "");
         //v2 api - very limited:
         //url = "https://api.twitter.com/2/users/by?user.fields=created_at,description,name,profile_image_url,url,username,verified&usernames=" + query.replace(" ", "");
@@ -382,6 +382,7 @@ const search = {
     let res = list
       .map((ele, i) => {
         let item = `<div data-index="${i}" class="list-item css-18t94o4 css-1dbjc4n r-1ny4l3l r-ymttw5 r-1f1sjgu"><div class="css-901oao">${insert}</div></div>`;
+        delete ele["profile_image_url"];
         Object.keys(ele).forEach((e) => {
           item = item.replaceAll("ele." + e, ele[e]);
         });
@@ -447,6 +448,7 @@ const search = {
       const requestUrl = new URL(search.typeAheadUrl);
       const csrfToken = search.getCookie("ct0");
       const gt = search.getCookie("gt");
+
       // constant in twitter js code
       const authorization = "AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
 
@@ -459,6 +461,7 @@ const search = {
       xmlHttp.open("GET", requestUrl.toString(), false);
       xmlHttp.setRequestHeader("x-csrf-token", csrfToken);
       xmlHttp.setRequestHeader("x-twitter-active-user", "yes");
+
       if (search.getCookie("auth_token")) {
         //check if user is logged in
         xmlHttp.setRequestHeader("x-twitter-auth-type", "OAuth2Session");
