@@ -21,8 +21,8 @@ const search = {
       t: "from:",
       pre: "@",
       type: "text", //html input type to take advantage of formatting and native pickers
-      q: (v) => `from:${v}`,
-      searchMethod: "users",
+      q: (v) => `from:${v}`, //function used to resolve token to query string
+      searchMethod: "users", //define what kind of suggestions script should show the user
     },
     {
       t: "to:",
