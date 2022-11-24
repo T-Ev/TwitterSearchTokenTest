@@ -12,7 +12,7 @@ I made this:
 
 [](https://)
 
-## Version 0.1.1!!! SUPER GREAT NOW!
+## Version 0.1.2!!! SUPER GREAT NOW!
 
 ### What's new?
 
@@ -24,10 +24,13 @@ I made this:
 - Added Keyboard Navigation
 - Styling update
 - Attempt to hook in search clear button if it exists
+- You can now tab to select suggestions
 
 ## Usage
 
-**Make sure you are signed in!**
+~~**Make sure you are signed in!**~~
+
+Nevermind it works in incognito now thanks the mad lad [@Yaroslav](https://twitter.com/512x512/status/1595612720497590273?s=20&t=-52KSb0xbmOJMpa6qqz9AA) who is an API BEAST! Give him a follow!
 
 Copy and paste the contents of script.js into the JS console of any twitter page with a search bar (i.e. [https://twitter.com/explore](https://twitter.com/explore)
 
