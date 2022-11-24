@@ -98,7 +98,6 @@ const search = {
     .token {
       white-space: nowrap;
       display: inline-block;
-      /*margin-top: 8px;*/
       padding: 3px 8px;
       background-color: #bbb;
       color: #222;
