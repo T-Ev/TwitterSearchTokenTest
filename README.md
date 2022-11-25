@@ -38,7 +38,7 @@ Thank you George! I am honored! Big thanks to the Twitter community and can't wa
 
 Copy and paste the contents of script.js into the JS console of any twitter page with a search bar (i.e. [https://twitter.com/explore](https://twitter.com/explore)
 
-![Usage Example](https://cdn.discordapp.com/attachments/803131522571829289/1045764671635984505/instructions.png)
+![Usage Example](https://cdn.discordapp.com/attachments/803131522571829289/1045770003087114351/instructions.png)
 
 I tried to keep the code/approach and usage as simple as possible.
 
