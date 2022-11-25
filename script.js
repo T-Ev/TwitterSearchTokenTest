@@ -98,13 +98,15 @@ const search = {
     .token {
       white-space: nowrap;
       display: inline-block;
-      padding: 3px 8px;
-      background-color: #bbb;
-      color: #222;
+      padding: 3px 13px;
+      background-color: #1d9bf0;
+      color: white;
       border-radius: 1em;
+      margin-right: 1px;
     }
     .token.live{
-      background-color:#888;
+      background-color: #dadada;
+      color: #222;
     }
     .token.live::after {
       content: "|";
@@ -136,6 +138,9 @@ const search = {
     }
     .filter-wrapper.darkmode div{
       color: rgb(247, 249, 249);
+    }
+    .filter-wrapper.darkmode .live{
+      color: #222;
     }
     `,
       head = document.head || document.getElementsByTagName("head")[0],
@@ -189,7 +194,7 @@ const search = {
   },
   checkDarkMode: () => {
     //check for darkmode
-    if (document.querySelector("body").style.backgroundColor !== "rgb(255, 255, 255)" && document.querySelector("body").style.backgroundColor !== "#FFFFFF") {
+    if ((document.querySelector("body").style.backgroundColor !== "rgb(255, 255, 255)" && document.querySelector("body").style.backgroundColor !== "#FFFFFF") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       document.querySelector(".filter-wrapper").classList.add("darkmode");
       try {
         search.listBox().classList.add("darkmode");
@@ -283,7 +288,7 @@ const search = {
       search.containerLive(search.renderLiveToken(e.target, e.target.value));
       let ltok = search.tokenObjects.filter((o) => search.liveToken(e.target) === o.t)[0];
       if (e.target.value.length > 1 && ltok.searchMethod !== "") search.predict(ltok.searchMethod, e.target.value);
-      document.querySelector(".filter-wrapper").scrollLeft += 300;
+      document.querySelector(".filter-wrapper").scrollLeft += 500;
     } else {
       search.predict("tokens", e.target.value);
     }
@@ -307,8 +312,11 @@ const search = {
       search.switchToken(e.target);
     } else if (e.key === "Backspace" && e.target.value.length == 0) {
       e.target.style.color = "inherit";
-      if (search.liveToken(e.target) === "") search.popToken(e.target);
-      else {
+      if (search.liveToken(e.target) === "") {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        search.popToken(e.target);
+      } else {
         search.liveToken(e.target, "");
         search.containerLive("");
       }
@@ -346,6 +354,7 @@ const search = {
     search.containerLive("");
     obj.value = "";
     search.clearList();
+    search.clearDebounceTimeout();
     document.querySelector(".filter-wrapper").scrollLeft += 500;
   },
   getTokenString: (obj) => {
@@ -450,7 +459,9 @@ const search = {
    */
   getCookie: (cname) => {
     let name = cname + "=";
-    let ca = document.cookie.split(';').find(v => { return v.match(name);});
+    let ca = document.cookie.split(";").find((v) => {
+      return v.match(name);
+    });
     return ca ? decodeURIComponent(ca).trim().replace(name, "") : "";
   },
   typeAheadUrl: "https://twitter.com/i/api/1.1/search/typeahead.json",
@@ -500,11 +511,14 @@ const search = {
     });
   },
   debounceGetTypeaheadTimeout: null,
+  clearDebounceTimeout: () => {
+    if (search.debounceGetTypeaheadTimeout) {
+      clearTimeout(search.debounceGetTypeaheadTimeout);
+    }
+  },
   debounceGetTypeahead: (twitterHandle) => {
     return new Promise((resolve, reject) => {
-      if (search.debounceGetTypeaheadTimeout) {
-        clearTimeout(search.debounceGetTypeaheadTimeout);
-      }
+      search.clearDebounceTimeout();
 
       search.debounceGetTypeaheadTimeout = setTimeout(() => {
         search
@@ -515,7 +529,7 @@ const search = {
           .catch((err) => {
             reject(err);
           });
-      }, 500);
+      }, 400);
     });
   },
 };
