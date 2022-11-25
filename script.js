@@ -159,10 +159,11 @@ const search = {
 
   //tokens are stored in data attributes in the search input tag
   init: () => {
+    console.log("search mod initialized");
     search.reset();
     search.injectCSS();
     //intialize dom containers
-    search.input().parentNode.innerHTML = "<span class='filter-wrapper'><span class='filter-container r-n6v787'></span><span class='filter-container-live r-n6v787'></span></span>" + $("[data-testid=SearchBox_Search_Input]").parentNode.innerHTML;
+    search.input().parentNode.innerHTML = "<span class='filter-wrapper'><span class='filter-container r-n6v787'></span><span class='filter-container-live r-n6v787'></span></span>" + document.querySelector("[data-testid=SearchBox_Search_Input]").parentNode.innerHTML;
     //add event listeners on input
     search.addListeners();
     search.input().dataset.tokens = "";
@@ -510,6 +511,7 @@ const search = {
       xmlHttp.send(null);
     });
   },
+  lastURL: null,
   debounceGetTypeaheadTimeout: null,
   clearDebounceTimeout: () => {
     if (search.debounceGetTypeaheadTimeout) {
@@ -533,4 +535,16 @@ const search = {
     });
   },
 };
-search.init();
+
+setTimeout(search.init, 1000);
+
+try {
+  chrome?.runtime?.onMessage?.addListener(function (request) {
+    if (request.message === "pageChanged") {
+      if (search.lastURL !== window.location.href) {
+        setTimeout(search.init, 1000);
+        search.lastURL = window.location.href;
+      }
+    }
+  });
+} catch {}

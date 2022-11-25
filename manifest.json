@@ -1,0 +1,14 @@
+{
+  "name": "TwitterSearchTokenTest",
+  "description": "TwitterSearchTokenTest?",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
