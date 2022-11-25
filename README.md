@@ -13,7 +13,9 @@ I made this:
 Thank you George! I am honored! Big thanks to the Twitter community and can't wait to see Twitter 2.0 develop. I do love working on cool projects so hit me up on Twitter anyone working on changing the world.
 
 ![The Results](https://cdn.discordapp.com/attachments/803131522571829289/1045765758073978931/image.png)
-s
+
+---
+
 [Challenge Results Thread](https://twitter.com/realGeorgeHotz/status/1596003668599328768?s=20&t=aOEUqX3LdV3dOEh3sTIevg)
 
 ## Version 0.1.3!!! SUPER SUPER GREAT NOW!
