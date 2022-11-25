@@ -390,7 +390,7 @@ const search = {
           .then((data) => data.json())
           .then((data) => data.data);
       } else if (userString != null) {
-        list = await search.getTypeAhead(userString).then((data) => JSON.parse(data).users);
+        list = await search.debounceGetTypeahead(userString).then((data) => JSON.parse(data).users);
       }
       if (list) search.renderList(list, insert, hint);
     }
@@ -507,6 +507,25 @@ const search = {
       };
 
       xmlHttp.send(null);
+    });
+  },
+  debounceGetTypeaheadTimeout: null,
+  debounceGetTypeahead: (twitterHandle) => {
+    return new Promise((resolve, reject) => {
+      if (search.debounceGetTypeaheadTimeout) {
+        clearTimeout(search.debounceGetTypeaheadTimeout);
+      }
+
+      search.debounceGetTypeaheadTimeout = setTimeout(() => {
+        search
+          .getTypeAhead(twitterHandle)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }, 500);
     });
   },
 };
