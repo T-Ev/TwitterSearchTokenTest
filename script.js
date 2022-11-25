@@ -312,8 +312,11 @@ const search = {
       search.switchToken(e.target);
     } else if (e.key === "Backspace" && e.target.value.length == 0) {
       e.target.style.color = "inherit";
-      if (search.liveToken(e.target) === "") search.popToken(e.target);
-      else {
+      if (search.liveToken(e.target) === "") {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        search.popToken(e.target);
+      } else {
         search.liveToken(e.target, "");
         search.containerLive("");
       }
