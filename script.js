@@ -139,6 +139,9 @@ const search = {
     .filter-wrapper.darkmode div{
       color: rgb(247, 249, 249);
     }
+    .filter-wrapper.darkmode .live{
+      color: #222;
+    }
     `,
       head = document.head || document.getElementsByTagName("head")[0],
       style = document.createElement("style");
@@ -191,7 +194,7 @@ const search = {
   },
   checkDarkMode: () => {
     //check for darkmode
-    if (document.querySelector("body").style.backgroundColor !== "rgb(255, 255, 255)" && document.querySelector("body").style.backgroundColor !== "#FFFFFF" && !(window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches)) {
+    if ((document.querySelector("body").style.backgroundColor !== "rgb(255, 255, 255)" && document.querySelector("body").style.backgroundColor !== "#FFFFFF") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       document.querySelector(".filter-wrapper").classList.add("darkmode");
       try {
         search.listBox().classList.add("darkmode");
