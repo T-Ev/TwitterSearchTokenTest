@@ -391,7 +391,7 @@ const search = {
           .then((data) => data.json())
           .then((data) => data.data);
       } else if (userString != null) {
-        list = await search.getTypeAhead(userString).then((data) => JSON.parse(data).users);
+        list = await search.debounceGetTypeahead(userString).then((data) => JSON.parse(data).users);
       }
       if (list) search.renderList(list, insert, hint);
     }
@@ -451,18 +451,8 @@ const search = {
    */
   getCookie: (cname) => {
     let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
+    let ca = document.cookie.split(';').find(v => { return v.match(name);});
+    return ca ? decodeURIComponent(ca).trim().replace(name, "") : "";
   },
   typeAheadUrl: "https://twitter.com/i/api/1.1/search/typeahead.json",
   getTypeAhead: (twitterHandle) => {
@@ -510,8 +500,29 @@ const search = {
       xmlHttp.send(null);
     });
   },
-  lastURL: null
+  lastURL: null,
+  debounceGetTypeaheadTimeout: null,
+  debounceGetTypeahead: (twitterHandle) => {
+    return new Promise((resolve, reject) => {
+      if (search.debounceGetTypeaheadTimeout) {
+        clearTimeout(search.debounceGetTypeaheadTimeout);
+      }
+
+      search.debounceGetTypeaheadTimeout = setTimeout(() => {
+        search
+          .getTypeAhead(twitterHandle)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }, 500);
+    });
+  },
 };
+
+setTimeout(search.init, 1000);
 
 try {
   chrome?.runtime?.onMessage?.addListener(function (request) {
