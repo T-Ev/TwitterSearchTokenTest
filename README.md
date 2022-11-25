@@ -10,7 +10,10 @@ I made this:
 
 [Demo Video](https://twitter.com/TJEvarts/status/1595600733914669062?s=20&t=_cdefDme6RcCFnC4_3ngkQ)
 
-[](https://)
+Thank you George! I am honored! Big thanks to the Twitter community and can't wait to see Twitter 2.0 develop. I do love working on cool projects so hit me up on Twitter anyone working on changing the world.
+
+![The Results](https://cdn.discordapp.com/attachments/803131522571829289/1045765758073978931/image.png)
+[Challenge Results Thread](https://twitter.com/realGeorgeHotz/status/1596003668599328768?s=20&t=aOEUqX3LdV3dOEh3sTIevg)
 
 ## Version 0.1.3!!! SUPER SUPER GREAT NOW!
 
@@ -30,13 +33,11 @@ I made this:
 
 ## Usage
 
-~~**Make sure you are signed in!**~~
-
-Nevermind it works in incognito now thanks the mad lad [@512x512 (Yaroslav)](https://twitter.com/512x512/status/1595612720497590273?s=20&t=-52KSb0xbmOJMpa6qqz9AA) who is an API BEAST! Give him a follow!
-
 Copy and paste the contents of script.js into the JS console of any twitter page with a search bar (i.e. [https://twitter.com/explore](https://twitter.com/explore)
 
-I tried to keep it as simple as possible.
+![Usage Example](https://cdn.discordapp.com/attachments/803131522571829289/1045764671635984505/instructions.png)
+
+I tried to keep the code/approach and usage as simple as possible.
 
 ![Demo Screenshot](https://cdn.discordapp.com/attachments/803131522571829289/1044900876772446219/image.png)
 
