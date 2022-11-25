@@ -450,18 +450,8 @@ const search = {
    */
   getCookie: (cname) => {
     let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
+    let ca = document.cookie.split(';').find(v => { return v.match(name);});
+    return ca ? decodeURIComponent(ca).trim().replace(name, "") : "";
   },
   typeAheadUrl: "https://twitter.com/i/api/1.1/search/typeahead.json",
   getTypeAhead: (twitterHandle) => {
