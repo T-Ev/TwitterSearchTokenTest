@@ -404,7 +404,9 @@ const search = {
       if (list) search.renderList(list, insert, hint);
     }
   },
-  renderList: (list, insert, hint = "") => {
+    renderList: (list, insert, hint = "") => {
+    // check if it's in darkmode
+    search.checkDarkMode();
     //render suggestions list
     //client side sorting:
     if (hint !== "") {
